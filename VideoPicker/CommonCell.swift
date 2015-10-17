@@ -105,14 +105,16 @@ class CommonCell : UICollectionViewCell {
         */
         
         imageGenerator!.generateCGImagesAsynchronouslyForTimes([NSValue.init(CMTime:time)]) { (requestedTime, image, actualTime, result, error) -> Void in
-            
-            if result == .Succeeded {
-                completion(image: UIImage(CGImage: image!))
-            }
-            else {
-                completion(image: nil)
-                print("Couldn't generate thumbnail, error:%@", error)
-            }
+
+            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                if result == .Succeeded {
+                    completion(image: UIImage(CGImage: image!))
+                }
+                else {
+                    completion(image: nil)
+                    print("Couldn't generate thumbnail, error:%@", error)
+                }
+            })
         }
 
         

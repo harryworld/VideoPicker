@@ -14,12 +14,14 @@ import AVFoundation
 import MobileCoreServices
 import AssetsLibrary
 
+import Foundation
 
 class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
     var assetPicker : AssetsPicker!
     
-    var urls = ["file:///var/mobile/Media/DCIM/100APPLE/IMG_0552.MOV", "file:///var/mobile/Media/DCIM/101APPLE/IMG_1351.MOV", "file:///var/mobile/Media/DCIM/101APPLE/IMG_1856.MOV","file:///var/mobile/Media/DCIM/102APPLE/IMG_2073.mov","file:///var/mobile/Media/DCIM/102APPLE/IMG_2622.MOV","file:///var/mobile/Media/DCIM/102APPLE/IMG_2184.MOV", "file:///var/mobile/Media/DCIM/103APPLE/IMG_3255.MOV", "file:///var/mobile/Media/DCIM/104APPLE/IMG_4220.MOV"]
+    var urls: [String] = []
+    
     
     let yOffset : CGFloat = 200
     
@@ -28,9 +30,13 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         
         self.view.backgroundColor = UIColor.whiteColor()
         
-        for _ in 1 ..< 10 {
-            urls.appendContentsOf(urls)
+        let bundle = NSBundle.mainBundle()
+        if let path = bundle.pathForResource("video", ofType: "mov") {
+            for _ in 1 ..< 10 {
+                urls.append(path)
+            }
         }
+        
         
         let showButton = UIButton(type: .Custom)
         showButton.setTitle("Show/Hide", forState: .Normal)
@@ -102,12 +108,12 @@ extension ViewController : AssetsPickerDataSource {
     }
     
     func itemForBottomAtIndex(index:Int) -> NSURL? {
-        return NSURL(string:urls[index])
+        return NSURL.fileURLWithPath(urls[index])
     }
     
     func itemForTopAtIndex(index:Int) -> NSURL? {
 //        return randomNumberFrom(0...1) == 1 ? NSURL(string: urls[index]) : nil
-        return  NSURL(string:urls[index])
+        return NSURL.fileURLWithPath(urls[index])
     }
     
     func randomNumberFrom(from: Range<Int>) -> Int {
