@@ -24,7 +24,7 @@ class TopCell : CommonCell {
         self.contentView.backgroundColor = UIColor(netHex: 0x3D3C3D)
         
         imageView.snp_makeConstraints{ make in
-            make.edges.equalTo(self.contentView).inset(UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10))
+            make.edges.equalTo(self.contentView).inset(UIEdgeInsets(top: 6, left: 10, bottom: 6, right: 10))
         }
         
         overlayView = UIImageView()

@@ -67,7 +67,7 @@ public class AssetsPicker : UIView {
     let topLayerCellMargin = (UIScreen.mainScreen().bounds.width / 6) / 5
     let bottomLayerCellMargin = (UIScreen.mainScreen().bounds.width / 12) / 11
     
-    let heightRatio : CGFloat = 0.33
+    let heightRatio : CGFloat = 0.4
     
     public override init(frame: CGRect) {
         super.init(frame: frame)
@@ -86,8 +86,8 @@ public class AssetsPicker : UIView {
         let topFlowLayout = UICollectionViewFlowLayout()
         topFlowLayout.itemSize = itemSize
         topFlowLayout.scrollDirection = .Horizontal
-        topFlowLayout.minimumInteritemSpacing = bottomLayerCellMargin
-        topFlowLayout.minimumLineSpacing = bottomLayerCellMargin
+        topFlowLayout.minimumInteritemSpacing = topLayerCellMargin
+        topFlowLayout.minimumLineSpacing = topLayerCellMargin
         
         topCollectionView = UICollectionView(frame: topFrame, collectionViewLayout: topFlowLayout)
         topCollectionView.delegate = self
