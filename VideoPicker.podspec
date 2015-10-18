@@ -87,8 +87,8 @@ Pod::Spec.new do |s|
   #  Not including the public_header_files will make all headers public.
   #
 
-  s.source_files  = "Classes", "Classes/**/*.swift"
-  s.exclude_files = "Classes/Exclude"
+  s.source_files  = "VideoPicker/**/*.swift"
+  s.exclude_files = "VideoPicker/AppDelegate.swift", "VideoPicker/ViewController.swift"
 
 
   # ――― Resources ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
@@ -111,7 +111,7 @@ Pod::Spec.new do |s|
   #  the lib prefix of their name.
   #
 
-  s.frameworks  = "SnapKit", "HanekeSwift"
+  # s.frameworks  = "SnapKit", "HanekeSwift"
 
   # s.library   = "iconv"
   # s.libraries = "iconv", "xml2"
@@ -127,5 +127,6 @@ Pod::Spec.new do |s|
 
   # s.xcconfig = { "HEADER_SEARCH_PATHS" => "$(SDKROOT)/usr/include/libxml2" }
   # s.dependency "JSONKit", "~> 1.4"
+  s.dependencies = "SnapKit", "HanekeSwift"
 
 end
