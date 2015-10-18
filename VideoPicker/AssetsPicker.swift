@@ -11,7 +11,7 @@ import UIKit
 import AVFoundation
 
 
-protocol AssetsPickerDataSource {
+public protocol AssetsPickerDataSource {
     
     func numberOfBottomItems() -> Int
     func numberOfTopItems() -> Int
@@ -27,7 +27,7 @@ protocol AssetsPickerDataSource {
 
 }
 
-protocol AssetsPickerDelegate {
+public protocol AssetsPickerDelegate {
     
     func didCommitChanges(bottomIndex: Int, topIndex: Int)
     
@@ -42,7 +42,7 @@ protocol AssetsPickerDelegate {
 let topCellIdentifier = "topCellIdentifier"
 let bottomCellIdentifier = "bottomCellIdentifier"
 
-class AssetsPicker : UIView {
+public class AssetsPicker : UIView {
 
     enum TopLayerState: Int {
         case Presented = 0, Dismissed
@@ -50,8 +50,8 @@ class AssetsPicker : UIView {
     
     var topLayerState : TopLayerState = .Dismissed
     
-    var delegate : AssetsPickerDelegate?
-    var dataSource : AssetsPickerDataSource?
+    public var delegate : AssetsPickerDelegate?
+    public var dataSource : AssetsPickerDataSource?
     
     var bottomCollectionView : UICollectionView!
     var topCollectionView : UICollectionView!
@@ -69,7 +69,7 @@ class AssetsPicker : UIView {
     
     let heightRatio : CGFloat = 0.33
     
-    override init(frame: CGRect) {
+    public override init(frame: CGRect) {
         super.init(frame: frame)
 
         let screenSize = UIScreen.mainScreen().bounds.size
@@ -134,7 +134,7 @@ class AssetsPicker : UIView {
         self.addSubview(okButton)
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    public required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
     
@@ -207,7 +207,7 @@ class AssetsPicker : UIView {
 
 extension AssetsPicker : UICollectionViewDelegate {
  
-    func collectionView(collectionView: UICollectionView, shouldSelectItemAtIndexPath indexPath: NSIndexPath) -> Bool {
+    public func collectionView(collectionView: UICollectionView, shouldSelectItemAtIndexPath indexPath: NSIndexPath) -> Bool {
         
         let selectedItem = collectionView.indexPathsForSelectedItems()
         
@@ -219,7 +219,7 @@ extension AssetsPicker : UICollectionViewDelegate {
     }
     
     
-    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+    public func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
 
         if (collectionView == bottomCollectionView) {
             toggleTopLayer(forceHide: false, forceShow: true)
@@ -243,7 +243,7 @@ extension AssetsPicker : UICollectionViewDelegate {
 
 extension AssetsPicker : UICollectionViewDataSource {
     
-    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    public func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         
         if let dataSource = self.dataSource {
             return collectionView == bottomCollectionView ? dataSource.numberOfBottomItems() : dataSource.numberOfTopItems()
@@ -251,7 +251,7 @@ extension AssetsPicker : UICollectionViewDataSource {
         return 0
     }
     
-    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+    public func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         
         let bottomLayer = collectionView == bottomCollectionView
         
@@ -269,7 +269,7 @@ extension AssetsPicker : UICollectionViewDataSource {
 }
 
 extension AssetsPicker : UICollectionViewDelegateFlowLayout {
-    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAtIndex section: Int) -> UIEdgeInsets {
+    public func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAtIndex section: Int) -> UIEdgeInsets {
         if (collectionView == bottomCollectionView) {
             return UIEdgeInsets(top: 0, left: bottomCollectionView.frame.size.width/2, bottom: 0, right: bottomCollectionView.frame.size.width/2)
         }
