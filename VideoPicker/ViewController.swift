@@ -32,7 +32,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         
         let bundle = NSBundle.mainBundle()
         if let path = bundle.pathForResource("video", ofType: "mov") {
-            for _ in 1 ..< 10 {
+            for _ in 1 ..< 100 {
                 urls.append(path)
             }
         }
@@ -93,7 +93,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
 extension ViewController : AssetsPickerDataSource {
     
     func numberOfBottomItems() -> Int {
-        return 6
+        return 99
     }
     func numberOfTopItems() -> Int {
         return urls.count
