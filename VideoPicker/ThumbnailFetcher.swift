@@ -51,9 +51,14 @@ public class ThumbnailFetcher<T : DataConvertible> : Fetcher<T> {
         
         imageGenerator.generateCGImagesAsynchronouslyForTimes([NSValue.init(CMTime: time)]) { [weak self] (requestedTime, image, actualTime, result, error) -> Void in
             
-            print(actualTime)
-            
             if let strongSelf = self {
+                
+                guard image != nil else {
+                    let localizedFormat = NSLocalizedString("Image generated is nil", comment: "Error description")
+                    let description = String(format:localizedFormat)
+                    strongSelf.failWithCode(.MissingData, localizedDescription: description, failure: fail)
+                    return
+                }
                 
                 switch result {
                 case .Succeeded:
