@@ -5,6 +5,6 @@ use_frameworks!
 
 target 'VideoPicker' do
 	pod 'SnapKit', '~> 0.15.0'
-    pod 'HanekeSwift'
+    pod 'HanekeSwift', :git => 'https://github.com/Haneke/HanekeSwift.git'
 end
 
