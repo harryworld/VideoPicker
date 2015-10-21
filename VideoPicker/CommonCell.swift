@@ -15,24 +15,20 @@ let iconFormat = Format<UIImage>(name: "thumbnail", diskCapacity: 50 * 1024 * 10
 
 class CommonCell : UICollectionViewCell {
     
-    var imageGenerator : AVAssetImageGenerator?
+    var op: ImageGenerator?
+    
     var imageView: UIImageView!
-    let margin : CGFloat = 12.0
     
     var selectionColor : UIColor!
     
     var assetURL : NSURL? {
         didSet {
             if let url = assetURL {
-
-                let cache = Shared.imageCache
-                let fetcher = ThumbnailFetcher<UIImage>(URL: url)
-                cache.addFormat(iconFormat)
                 
-                cache.fetch(fetcher: fetcher).onSuccess { image in
-                    self.imageView.image = image
-                    self.imageView.setNeedsDisplay()
-                }
+                op = ImageGenerator(URL: url, imageView: imageView)
+                let queue = PendingOperations.sharedInstance.generationQueue
+                queue.addOperation(op!)
+
             }
         }
     }
@@ -56,6 +52,11 @@ class CommonCell : UICollectionViewCell {
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
+    }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        op!.cancelFetch()
     }
     
 }
