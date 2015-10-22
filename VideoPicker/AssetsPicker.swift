@@ -19,8 +19,8 @@ public protocol AssetsPickerDataSource {
     func indexOfBottomSelectedItem() -> Int
     func indexOfTopSelectedItem() -> Int
     
-    func itemForBottomAtIndex(index:Int) -> NSURL?
-    func itemForTopAtIndex(index:Int) -> NSURL?
+    func imagePathForBottomAtIndex(index:Int) -> String?
+    func imagePathForTopAtIndex(index:Int) -> String?
     
     func bottomColorForSelectedState() -> UIColor
     func topColorForSelectedState() -> UIColor
@@ -257,7 +257,7 @@ extension AssetsPicker : UICollectionViewDataSource {
         
         let identifier = bottomLayer ? bottomCellIdentifier : topCellIdentifier
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier(identifier, forIndexPath: indexPath) as! CommonCell
-        cell.assetURL = bottomLayer ? dataSource!.itemForBottomAtIndex(indexPath.item) : dataSource!.itemForTopAtIndex(indexPath.item)
+        cell.imagePath = bottomLayer ? dataSource!.imagePathForBottomAtIndex(indexPath.item) : dataSource!.imagePathForTopAtIndex(indexPath.item)
         cell.selectionColor = bottomLayer ? dataSource?.bottomColorForSelectedState() : dataSource?.topColorForSelectedState()
 
         if (!bottomLayer && dataSource?.indexOfTopSelectedItem() >= 0) {

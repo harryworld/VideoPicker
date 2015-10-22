@@ -31,7 +31,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         self.view.backgroundColor = UIColor.whiteColor()
         
         let bundle = NSBundle.mainBundle()
-        if let path = bundle.pathForResource("video", ofType: "mov") {
+        if let path = bundle.pathForResource("dashboard", ofType: "png") {
             for _ in 1 ..< 100 {
                 urls.append(path)
             }
@@ -114,6 +114,14 @@ extension ViewController : AssetsPickerDataSource {
     func itemForTopAtIndex(index:Int) -> NSURL? {
 //        return randomNumberFrom(0...1) == 1 ? NSURL(string: urls[index]) : nil
         return NSURL.fileURLWithPath(urls[index])
+    }
+    
+    func imagePathForBottomAtIndex(index:Int) -> String? {
+        return urls[index]
+    }
+    
+    func imagePathForTopAtIndex(index:Int) -> String? {
+        return urls[index]
     }
     
     func randomNumberFrom(from: Range<Int>) -> Int {

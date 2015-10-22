@@ -21,18 +21,13 @@ class CommonCell : UICollectionViewCell {
     
     var selectionColor : UIColor!
     
-    var assetURL : NSURL? {
+    var imagePath : String? {
         didSet {
-            if let url = assetURL {
-
+            if let path = imagePath {
                 let cache = Shared.imageCache
-                let fetcher = ThumbnailFetcher<UIImage>(URL: url)
-                cache.addFormat(iconFormat)
-                
-                cache.fetch(fetcher: fetcher).onSuccess { image in
+                cache.fetch(path: path).onSuccess({ (image) -> () in
                     self.imageView.image = image
-                    self.imageView.setNeedsDisplay()
-                }
+                })
             }
         }
     }

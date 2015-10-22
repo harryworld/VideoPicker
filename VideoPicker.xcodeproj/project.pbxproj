@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		D17CD6421BD7815C0092B0C6 /* ThumbnailFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = D17CD6411BD7815C0092B0C6 /* ThumbnailFetcher.swift */; settings = {ASSET_TAGS = (); }; };
+		D1855A151BD9139B00A22256 /* dashboard.png in Resources */ = {isa = PBXBuildFile; fileRef = D1855A141BD9139B00A22256 /* dashboard.png */; settings = {ASSET_TAGS = (); }; };
 		D1EECD2F1BD2565F002D21A6 /* video.mov in Resources */ = {isa = PBXBuildFile; fileRef = D1EECD2E1BD2565F002D21A6 /* video.mov */; settings = {ASSET_TAGS = (); }; };
 		D4172E501BC6D10D0063F249 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4172E4F1BC6D10D0063F249 /* AppDelegate.swift */; };
 		D4172E521BC6D10D0063F249 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4172E511BC6D10D0063F249 /* ViewController.swift */; };
@@ -26,6 +27,7 @@
 		6A39F0CC3842FB7108DA8FDB /* Pods-VideoPicker.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VideoPicker.debug.xcconfig"; path = "Pods/Target Support Files/Pods-VideoPicker/Pods-VideoPicker.debug.xcconfig"; sourceTree = "<group>"; };
 		A83D959A7630D98779B4CB0F /* Pods_VideoPicker.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_VideoPicker.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D17CD6411BD7815C0092B0C6 /* ThumbnailFetcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ThumbnailFetcher.swift; sourceTree = "<group>"; };
+		D1855A141BD9139B00A22256 /* dashboard.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dashboard.png; sourceTree = "<group>"; };
 		D1EECD2E1BD2565F002D21A6 /* video.mov */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; path = video.mov; sourceTree = "<group>"; };
 		D4172E4C1BC6D10D0063F249 /* VideoPicker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VideoPicker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D4172E4F1BC6D10D0063F249 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -95,6 +97,7 @@
 				D4401EE21BC7EEF600F7AB1C /* BottomCell.swift */,
 				D4401EE41BC80A1300F7AB1C /* TopCell.swift */,
 				D4FFEE571BCA6B6D0012F310 /* UIColorHex.swift */,
+				D1855A141BD9139B00A22256 /* dashboard.png */,
 				D1EECD2E1BD2565F002D21A6 /* video.mov */,
 				D17CD6411BD7815C0092B0C6 /* ThumbnailFetcher.swift */,
 			);
@@ -173,6 +176,7 @@
 			files = (
 				D1EECD2F1BD2565F002D21A6 /* video.mov in Resources */,
 				D4172E5A1BC6D10D0063F249 /* LaunchScreen.storyboard in Resources */,
+				D1855A151BD9139B00A22256 /* dashboard.png in Resources */,
 				D4172E571BC6D10D0063F249 /* Assets.xcassets in Resources */,
 				D4172E551BC6D10D0063F249 /* Main.storyboard in Resources */,
 			);
