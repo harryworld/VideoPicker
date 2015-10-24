@@ -225,14 +225,14 @@ extension AssetsPicker : UICollectionViewDelegate {
             toggleTopLayer(forceHide: false, forceShow: true)
             topCollectionView.reloadData()
             bottomSelectedIndex = indexPath
+            
+            delegate?.didSelectItemBottom(indexPath.item)
         }
         else {
             
             topSelectedIndex = indexPath
             
-            if let _ = delegate {
-                delegate!.didSelectItemTop(indexPath.item)
-            }
+            delegate?.didSelectItemTop(indexPath.item)
             
         }
    
