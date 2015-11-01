@@ -159,6 +159,8 @@ public class AssetsPicker : UIView {
             
             if let _ = bottomSelectedIndex, _ = topSelectedIndex {
                 delegate?.didCommitChanges(bottomSelectedIndex.item, topIndex: topSelectedIndex.item)
+                bottomCollectionView.reloadItemsAtIndexPaths([bottomSelectedIndex])
+                bottomCollectionView.layoutIfNeeded()
             }
 
             if let path = bottomCollectionView.indexPathsForSelectedItems()?.first {
@@ -233,7 +235,8 @@ extension AssetsPicker : UICollectionViewDelegate {
             delegate?.didSelectItemBottom(indexPath.item)
         }
         else {
-
+            topSelectedIndex = indexPath
+            
             delegate?.didSelectItemTop(indexPath.item)
             
         }
@@ -264,6 +267,9 @@ extension AssetsPicker : UICollectionViewDataSource {
 
         if (!bottomLayer && dataSource?.indexOfTopSelectedItem() >= 0) {
             cell.selected = indexPath.item == dataSource?.indexOfTopSelectedItem()
+            if cell.selected {
+                collectionView.selectItemAtIndexPath(indexPath, animated: false, scrollPosition: .CenteredHorizontally)
+            }
         }
         
         return cell
