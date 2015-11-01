@@ -44,11 +44,11 @@ let bottomCellIdentifier = "bottomCellIdentifier"
 
 public class AssetsPicker : UIView {
 
-    enum TopLayerState: Int {
+    public enum TopLayerState: Int {
         case Presented = 0, Dismissed
     }
     
-    var topLayerState : TopLayerState = .Dismissed
+    public var topLayerState : TopLayerState = .Dismissed
     
     public var delegate : AssetsPickerDelegate?
     public var dataSource : AssetsPickerDataSource?
@@ -138,7 +138,7 @@ public class AssetsPicker : UIView {
         super.init(coder: aDecoder)
     }
     
-    func onCancel() {
+    public func onCancel() {
         if (topLayerState == .Presented) {
             toggleTopLayer(forceHide: true, forceShow: false)
             if let path = bottomCollectionView.indexPathsForSelectedItems()?.first {
@@ -211,6 +211,10 @@ extension AssetsPicker : UICollectionViewDelegate {
         
         let selectedItem = collectionView.indexPathsForSelectedItems()
         
+        if collectionView == topCollectionView {
+            return true
+        }
+        
         if let selectedPath : NSIndexPath = selectedItem?.first where selectedPath.isEqual(indexPath) {
            return false
         }
@@ -229,9 +233,7 @@ extension AssetsPicker : UICollectionViewDelegate {
             delegate?.didSelectItemBottom(indexPath.item)
         }
         else {
-            
-            topSelectedIndex = indexPath
-            
+
             delegate?.didSelectItemTop(indexPath.item)
             
         }
