@@ -12,6 +12,7 @@ import SnapKit
 
 class BottomCell : CommonCell {
     
+    var dateLabel: UILabel!
     
     override var selectionColor : UIColor! {
         didSet {
@@ -28,6 +29,15 @@ class BottomCell : CommonCell {
         
         imageView.snp_makeConstraints { make in
             make.edges.equalTo(self.contentView).inset(UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5))
+        }
+        
+        dateLabel = UILabel()
+        dateLabel.textColor = UIColor.whiteColor()
+        self.addSubview(dateLabel)
+        
+        dateLabel.snp_makeConstraints { make in
+            make.centerX.equalTo(self.snp_centerX)
+            make.centerY.equalTo(self.snp_centerY)
         }
 
     }

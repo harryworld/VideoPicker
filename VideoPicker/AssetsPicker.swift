@@ -24,7 +24,8 @@ public protocol AssetsPickerDataSource {
     
     func bottomColorForSelectedState() -> UIColor
     func topColorForSelectedState() -> UIColor
-
+    
+    func bottomTextForItem(index: Int) -> String
 }
 
 public protocol AssetsPickerDelegate {
@@ -270,6 +271,10 @@ extension AssetsPicker : UICollectionViewDataSource {
             if cell.selected {
                 collectionView.selectItemAtIndexPath(indexPath, animated: false, scrollPosition: .CenteredHorizontally)
             }
+        }
+        
+        if let cell = cell as? BottomCell {
+            cell.dateLabel.text = dataSource?.bottomTextForItem(indexPath.item)
         }
         
         return cell
