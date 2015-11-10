@@ -92,6 +92,10 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
 
 extension ViewController : AssetsPickerDataSource {
     
+    func bottomTextForItem(index: Int) -> String {
+        return ""
+    }
+    
     func numberOfBottomItems() -> Int {
         return 99
     }

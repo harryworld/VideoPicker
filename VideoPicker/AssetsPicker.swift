@@ -69,9 +69,12 @@ public class AssetsPicker : UIView {
     let bottomLayerCellMargin = (UIScreen.mainScreen().bounds.width / 12) / 11
     
     let heightRatio : CGFloat = 0.4
+    let buttonWidth : CGFloat = 54
     
     public override init(frame: CGRect) {
         super.init(frame: frame)
+        
+        let bundle = NSBundle(forClass: self.classForCoder)
 
         let screenSize = UIScreen.mainScreen().bounds.size
         let bottomYOffset = floor(frame.size.height*(1-heightRatio))
@@ -119,17 +122,17 @@ public class AssetsPicker : UIView {
         // buttons
         
         cancelButton = UIButton(type: .Custom)
-        cancelButton.frame = CGRect(x: 0, y: bottomYOffset, width: bottomHeight, height: bottomHeight)
-        cancelButton.setImage(UIImage(named: "close1"), forState: .Normal)
-        cancelButton.setImage(UIImage(named: "close1"), forState: .Highlighted)
+        cancelButton.frame = CGRect(x: 0, y: bottomYOffset, width: buttonWidth, height: bottomHeight)
+        cancelButton.setImage(UIImage(named: "Cancel", inBundle: bundle, compatibleWithTraitCollection: nil), forState: .Normal)
+        cancelButton.setImage(UIImage(named: "Cancel", inBundle: bundle, compatibleWithTraitCollection: nil), forState: .Highlighted)
         cancelButton.backgroundColor = UIColor(netHex: 0x444033)
         cancelButton.addTarget(self, action: "onCancel", forControlEvents: .TouchUpInside)
         self.addSubview(cancelButton)
         
         okButton = UIButton(type: .Custom)
-        okButton.frame = CGRect(x: screenSize.width - bottomHeight, y: bottomYOffset, width: bottomHeight, height: bottomHeight)
-        okButton.setImage(UIImage(named: "ok1"), forState: .Normal)
-        okButton.setImage(UIImage(named: "ok1"), forState: .Highlighted)
+        okButton.frame = CGRect(x: screenSize.width - buttonWidth, y: bottomYOffset, width: buttonWidth, height: bottomHeight)
+        okButton.setImage(UIImage(named: "Choose", inBundle: bundle, compatibleWithTraitCollection: nil), forState: .Normal)
+        okButton.setImage(UIImage(named: "Choose", inBundle: bundle, compatibleWithTraitCollection: nil), forState: .Highlighted)
         okButton.backgroundColor = UIColor(netHex: 0x444033)
         okButton.addTarget(self, action: "onApply", forControlEvents: .TouchUpInside)
         self.addSubview(okButton)
@@ -176,30 +179,23 @@ public class AssetsPicker : UIView {
     }
     
     func toggleTopLayer(forceHide forceHide : Bool, forceShow: Bool) {
+        let bundle = NSBundle(forClass: self.classForCoder)
         
-        var cancelImageName = "close1"
-        var okImageName = "ok1"
+        let cancelImageName = "Cancel"
+        let okImageName = "Choose"
         
         var frame = topCollectionView.frame
         frame.origin.y = topCollectionView.frame.origin.y == bottomCollectionView.frame.origin.y ? 0 : bottomCollectionView.frame.origin.y
         frame.origin.y = forceHide ? bottomCollectionView.frame.origin.y : frame.origin.y
         frame.origin.y = forceShow ? 0 : frame.origin.y
         
-        if (frame.origin.y == bottomCollectionView.frame.origin.y) {
-            cancelImageName = "close1"
-            okImageName = "ok1"
-            topLayerState = .Dismissed
-        }
-        else {
-            cancelImageName = "close2"
-            okImageName = "ok2"
-            topLayerState = .Presented
-        }
-
-        cancelButton.setImage(UIImage(named: cancelImageName), forState: .Normal)
-        cancelButton.setImage(UIImage(named: cancelImageName), forState: .Normal)
-        okButton.setImage(UIImage(named: okImageName), forState: .Normal)
-        okButton.setImage(UIImage(named: okImageName), forState: .Normal)
+        if (forceShow) { topLayerState = .Presented }
+        if (forceHide) { topLayerState = .Dismissed }
+        
+        cancelButton.setImage(UIImage(named: cancelImageName, inBundle: bundle, compatibleWithTraitCollection: nil), forState: .Normal)
+        cancelButton.setImage(UIImage(named: cancelImageName, inBundle: bundle, compatibleWithTraitCollection: nil), forState: .Normal)
+        okButton.setImage(UIImage(named: okImageName, inBundle: bundle, compatibleWithTraitCollection: nil), forState: .Normal)
+        okButton.setImage(UIImage(named: okImageName, inBundle: bundle, compatibleWithTraitCollection: nil), forState: .Normal)
         
         UIView.animateWithDuration(0.25) { _ in
             self.topCollectionView.frame = frame
