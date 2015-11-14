@@ -157,6 +157,16 @@ public class AssetsPicker : UIView {
 
     }
     
+    public func moveTo(var index: Int) {
+        if let dataSource = self.dataSource {
+            if index >= dataSource.numberOfBottomItems() {
+                index = dataSource.numberOfBottomItems()
+            }
+        }
+        bottomCollectionView.selectItemAtIndexPath(NSIndexPath(forItem: index, inSection: 0), animated: false, scrollPosition: .CenteredHorizontally)
+        self.collectionView(bottomCollectionView, didSelectItemAtIndexPath: NSIndexPath(forItem: index, inSection: 0))
+    }
+    
     func onApply() {
         if (topLayerState == .Presented) {
             toggleTopLayer(forceHide: true, forceShow: false)
