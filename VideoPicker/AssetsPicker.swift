@@ -11,7 +11,7 @@ import UIKit
 import AVFoundation
 
 
-public protocol AssetsPickerDataSource {
+@objc public protocol AssetsPickerDataSource {
     
     func numberOfBottomItems() -> Int
     func numberOfTopItems() -> Int
@@ -19,8 +19,10 @@ public protocol AssetsPickerDataSource {
     func indexOfBottomSelectedItem() -> Int
     func indexOfTopSelectedItem() -> Int
     
-    func imagePathForBottomAtIndex(index:Int) -> String?
-    func imagePathForTopAtIndex(index:Int) -> String?
+    optional func imagePathForBottomAtIndex(index:Int) -> String?
+    optional func imageForBottomAtIndex(index: Int) -> UIImage?
+    optional func imagePathForTopAtIndex(index:Int) -> String?
+    optional func imageForTopAtIndex(index: Int) -> UIImage?
     
     func bottomColorForSelectedState() -> UIColor
     func topColorForSelectedState() -> UIColor
@@ -269,9 +271,26 @@ extension AssetsPicker : UICollectionViewDataSource {
         
         let identifier = bottomLayer ? bottomCellIdentifier : topCellIdentifier
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier(identifier, forIndexPath: indexPath) as! CommonCell
-        cell.imagePath = bottomLayer ? dataSource!.imagePathForBottomAtIndex(indexPath.item) : dataSource!.imagePathForTopAtIndex(indexPath.item)
+        
+        // Use image by default, or else use imagePath
+        if bottomLayer {
+            if let image = dataSource?.imageForBottomAtIndex?(indexPath.item) {
+                cell.image = image
+            } else {
+                cell.imagePath = dataSource?.imagePathForBottomAtIndex?(indexPath.item)
+            }
+        } else {
+            if let image = dataSource?.imageForTopAtIndex?(indexPath.item) {
+                cell.image = image
+            } else {
+                cell.imagePath = dataSource?.imagePathForTopAtIndex?(indexPath.item)
+            }
+        }
+        
+        // Selection Color
         cell.selectionColor = bottomLayer ? dataSource?.bottomColorForSelectedState() : dataSource?.topColorForSelectedState()
 
+        // Selection state
         if (!bottomLayer && dataSource?.indexOfTopSelectedItem() >= 0) {
             cell.selected = indexPath.item == dataSource?.indexOfTopSelectedItem()
             if cell.selected {
@@ -279,6 +298,7 @@ extension AssetsPicker : UICollectionViewDataSource {
             }
         }
         
+        // Show text in the cell
         if let cell = cell as? BottomCell {
             cell.dateLabel.text = dataSource?.bottomTextForItem(indexPath.item)
         }

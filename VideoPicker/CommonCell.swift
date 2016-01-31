@@ -32,6 +32,14 @@ class CommonCell : UICollectionViewCell {
         }
     }
     
+    var image: UIImage? {
+        didSet {
+            if let image = image {
+                self.imageView.image = image
+            }
+        }
+    }
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         
