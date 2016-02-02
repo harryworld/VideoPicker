@@ -13,7 +13,15 @@ import Haneke
 
 let iconFormat = Format<UIImage>(name: "thumbnail", diskCapacity: 50 * 1024 * 1024) { image in return image }
 
+@objc protocol AssetsPickerCellDelegate {
+    optional func choose(sender: AnyObject)
+    optional func trim(sender: AnyObject)
+    optional func deleteVideo(sender: AnyObject)
+}
+
 class CommonCell : UICollectionViewCell {
+    
+    var delegate: AssetsPickerCellDelegate?
     
     var imageGenerator : AVAssetImageGenerator?
     var imageView: UIImageView!

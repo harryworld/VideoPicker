@@ -42,11 +42,25 @@ public protocol AssetsPickerDelegate {
     
 }
 
+@objc public protocol AssetsPickerMenuDelegate {
+    
+    optional func didChooseVideo()
+    optional func didTrimVideo()
+    optional func didDeleteVideo()
+    
+}
+
 let topCellIdentifier = "topCellIdentifier"
 let bottomCellIdentifier = "bottomCellIdentifier"
 
-public class AssetsPicker : UIView {
+final public class AssetsPicker : UIView {
 
+    public enum Mode: Int {
+        case EditVideo = 0, MagicPlay
+    }
+    
+    public var mode: Mode = .EditVideo
+    
     public enum TopLayerState: Int {
         case Presented = 0, Dismissed
     }
@@ -55,6 +69,7 @@ public class AssetsPicker : UIView {
     
     public var delegate : AssetsPickerDelegate?
     public var dataSource : AssetsPickerDataSource?
+    public var menuDelegate : AssetsPickerMenuDelegate?
     
     var bottomCollectionView : UICollectionView!
     var topCollectionView : UICollectionView!
@@ -237,9 +252,14 @@ extension AssetsPicker : UICollectionViewDelegate {
     public func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
 
         if (collectionView == bottomCollectionView) {
-            toggleTopLayer(forceHide: false, forceShow: true)
-            topCollectionView.reloadData()
-            bottomSelectedIndex = indexPath
+            switch mode {
+            case .EditVideo:
+                toggleTopLayer(forceHide: false, forceShow: true)
+                topCollectionView.reloadData()
+                bottomSelectedIndex = indexPath
+            case .MagicPlay:
+                collectionView.scrollToItemAtIndexPath(indexPath, atScrollPosition: .CenteredHorizontally, animated: true)
+            }
             
             delegate?.didSelectItemBottom(indexPath.item)
         }
@@ -271,6 +291,7 @@ extension AssetsPicker : UICollectionViewDataSource {
         
         let identifier = bottomLayer ? bottomCellIdentifier : topCellIdentifier
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier(identifier, forIndexPath: indexPath) as! CommonCell
+        cell.delegate = self
         
         // Use image by default, or else use imagePath
         if bottomLayer {
@@ -314,4 +335,20 @@ extension AssetsPicker : UICollectionViewDelegateFlowLayout {
         }
         return UIEdgeInsetsZero
     }
+}
+
+extension AssetsPicker: AssetsPickerCellDelegate {
+    
+    func choose(sender: AnyObject) {
+        menuDelegate?.didChooseVideo?()
+    }
+    
+    func trim(sender: AnyObject) {
+        menuDelegate?.didTrimVideo?()
+    }
+    
+    func deleteVideo(sender: AnyObject) {
+        menuDelegate?.didDeleteVideo?()
+    }
+    
 }

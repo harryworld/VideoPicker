@@ -40,6 +40,9 @@ class BottomCell : CommonCell {
             make.centerY.equalTo(self.snp_centerY)
         }
 
+        // UIMenuController
+        let longPress = UILongPressGestureRecognizer(target: self, action: "handleLongPressGesture:")
+        addGestureRecognizer(longPress)
     }
     
     required init?(coder: NSCoder) {
@@ -55,6 +58,57 @@ class BottomCell : CommonCell {
         didSet {
             self.imageView.layer.borderWidth = selected ? 2 : 0
         }
+    }
+    
+    // ========================
+    // MARK: - UIMenuController
+    // ========================
+    
+    func handleLongPressGesture(recognizer: UILongPressGestureRecognizer) {
+        if let recognizerView = recognizer.view,
+            recognizerSuperView = recognizerView.superview
+        {
+            let menuController = UIMenuController.sharedMenuController()
+            menuController.setTargetRect(recognizerView.frame, inView: recognizerSuperView)
+            menuController.setMenuVisible(true, animated:true)
+            
+            let menuItemChoose = UIMenuItem(title: "Choose", action: "choose:")
+            let menuItemTrim = UIMenuItem(title: "Trim", action: "trim:")
+            let menuItemDelete = UIMenuItem(title: "Delete", action: "deleteVideo:")
+            menuController.menuItems = [menuItemChoose, menuItemTrim, menuItemDelete]
+            
+            recognizerView.becomeFirstResponder()
+            
+        }
+    }
+    
+    override func canBecomeFirstResponder() -> Bool {
+        if let delegate = delegate as? AssetsPicker {
+            switch delegate.mode {
+            case .EditVideo:
+                return false
+            case .MagicPlay:
+                return true
+            }
+        }
+        
+        return false
+    }
+    
+    override func canPerformAction(action: Selector, withSender sender: AnyObject?) -> Bool {
+        return (action == "choose:" || action == "trim:" || action == "deleteVideo:")
+    }
+    
+    func choose(sender: AnyObject) {
+        delegate?.choose?(sender)
+    }
+    
+    func trim(sender: AnyObject) {
+        delegate?.trim?(sender)
+    }
+    
+    func deleteVideo(sender: AnyObject) {
+        delegate?.deleteVideo?(sender)
     }
     
 }
