@@ -174,14 +174,31 @@ final public class AssetsPicker : UIView {
 
     }
     
-    public func moveTo(var index: Int) {
+    public func moveTo(index: Int) {
+        moveTo(index, animated: false, didSelect: true)
+    }
+    
+    public func moveTo(var index: Int, animated: Bool, didSelect: Bool) {
         if let dataSource = self.dataSource {
             if index >= dataSource.numberOfBottomItems() {
-                index = dataSource.numberOfBottomItems()
+                index = dataSource.numberOfBottomItems() - 1
             }
         }
-        bottomCollectionView.selectItemAtIndexPath(NSIndexPath(forItem: index, inSection: 0), animated: false, scrollPosition: .CenteredHorizontally)
-        self.collectionView(bottomCollectionView, didSelectItemAtIndexPath: NSIndexPath(forItem: index, inSection: 0))
+        
+        bottomCollectionView.selectItemAtIndexPath(NSIndexPath(forItem: index, inSection: 0), animated: animated, scrollPosition: .CenteredHorizontally)
+        if didSelect {
+            self.collectionView(bottomCollectionView, didSelectItemAtIndexPath: NSIndexPath(forItem: index, inSection: 0))
+        }
+    }
+    
+    public func scrollTo(var index: Int, animated: Bool) {
+        if let dataSource = self.dataSource {
+            if index >= dataSource.numberOfBottomItems() {
+                index = dataSource.numberOfBottomItems() - 1
+            }
+        }
+        
+        bottomCollectionView.scrollToItemAtIndexPath(NSIndexPath(forItem: index, inSection: 0), atScrollPosition: .CenteredHorizontally, animated: animated)
     }
     
     func onApply() {
