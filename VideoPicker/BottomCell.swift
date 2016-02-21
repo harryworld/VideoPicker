@@ -100,15 +100,17 @@ class BottomCell : CommonCell {
     }
     
     func choose(sender: AnyObject) {
-        delegate?.choose?(sender)
+        delegate?.choose?(sender, index: 0)
     }
     
     func trim(sender: AnyObject) {
-        delegate?.trim?(sender)
+        delegate?.trim?(sender, index: 0)
     }
     
     func deleteVideo(sender: AnyObject) {
-        delegate?.deleteVideo?(sender)
+        if let delegate = delegate as? AssetsPicker, let indexPath = delegate.bottomCollectionView.indexPathForCell(self) {
+            delegate.deleteVideo(sender, index: indexPath.item)
+        }
     }
     
 }

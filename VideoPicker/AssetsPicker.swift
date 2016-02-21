@@ -44,9 +44,9 @@ public protocol AssetsPickerDelegate {
 
 @objc public protocol AssetsPickerMenuDelegate {
     
-    optional func didChooseVideo()
-    optional func didTrimVideo()
-    optional func didDeleteVideo()
+    optional func didChooseVideo(index: Int)
+    optional func didTrimVideo(index: Int)
+    optional func didDeleteVideo(index: Int)
     
 }
 
@@ -354,18 +354,29 @@ extension AssetsPicker : UICollectionViewDelegateFlowLayout {
     }
 }
 
-extension AssetsPicker: AssetsPickerCellDelegate {
+extension AssetsPicker {
     
-    func choose(sender: AnyObject) {
-        menuDelegate?.didChooseVideo?()
+    // MARK - DataSource Helpers
+    
+    public func reloadData() {
+        bottomCollectionView.reloadData()
     }
     
-    func trim(sender: AnyObject) {
-        menuDelegate?.didTrimVideo?()
+}
+
+extension AssetsPicker : AssetsPickerCellDelegate {
+    
+    func choose(sender: AnyObject, index: Int) {
+        menuDelegate?.didChooseVideo?(index)
     }
     
-    func deleteVideo(sender: AnyObject) {
-        menuDelegate?.didDeleteVideo?()
+    func trim(sender: AnyObject, index: Int) {
+        menuDelegate?.didTrimVideo?(index)
+    }
+    
+    func deleteVideo(sender: AnyObject, index: Int) {
+        
+        menuDelegate?.didDeleteVideo?(index)
     }
     
 }
