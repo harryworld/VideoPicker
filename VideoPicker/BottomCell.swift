@@ -41,8 +41,9 @@ class BottomCell : CommonCell {
         }
 
         // UIMenuController
-        let longPress = UILongPressGestureRecognizer(target: self, action: "handleLongPressGesture:")
-        addGestureRecognizer(longPress)
+        let tap = UITapGestureRecognizer(target: self, action: "handleTapGesture:")
+        tap.delegate = self
+        addGestureRecognizer(tap)
     }
     
     required init?(coder: NSCoder) {
@@ -64,9 +65,8 @@ class BottomCell : CommonCell {
     // MARK: - UIMenuController
     // ========================
     
-    func handleLongPressGesture(recognizer: UILongPressGestureRecognizer) {
-        if let recognizerView = recognizer.view,
-            recognizerSuperView = recognizerView.superview
+    func handleTapGesture(tap: UITapGestureRecognizer) {
+        if let recognizerView = tap.view, recognizerSuperView = recognizerView.superview
         {
             let menuController = UIMenuController.sharedMenuController()
             menuController.setTargetRect(recognizerView.frame, inView: recognizerSuperView)
@@ -111,6 +111,14 @@ class BottomCell : CommonCell {
         if let delegate = delegate as? AssetsPicker, let indexPath = delegate.bottomCollectionView.indexPathForCell(self) {
             delegate.deleteVideo(sender, index: indexPath.item)
         }
+    }
+    
+}
+
+extension BottomCell: UIGestureRecognizerDelegate {
+    
+    func gestureRecognizer(gestureRecognizer: UIGestureRecognizer, shouldReceiveTouch touch: UITouch) -> Bool {
+        return selected
     }
     
 }
