@@ -14,6 +14,8 @@ class BottomCell : CommonCell {
     
     var dateLabel: UILabel!
     
+    let menuController = UIMenuController.sharedMenuController()
+    
     override var selectionColor : UIColor! {
         didSet {
             self.imageView.layer.borderColor = selectionColor.CGColor
@@ -41,6 +43,11 @@ class BottomCell : CommonCell {
         }
 
         // UIMenuController
+        let menuItemChoose = UIMenuItem(title: "Choose", action: "choose:")
+        let menuItemTrim = UIMenuItem(title: "Trim", action: "trim:")
+        let menuItemDelete = UIMenuItem(title: "Delete", action: "deleteVideo:")
+        menuController.menuItems = [menuItemChoose, menuItemTrim, menuItemDelete]
+
         let tap = UITapGestureRecognizer(target: self, action: "handleTapGesture:")
         tap.delegate = self
         addGestureRecognizer(tap)
@@ -68,15 +75,8 @@ class BottomCell : CommonCell {
     func handleTapGesture(tap: UITapGestureRecognizer) {
         if let recognizerView = tap.view, recognizerSuperView = recognizerView.superview
         {
-            let menuController = UIMenuController.sharedMenuController()
             menuController.setTargetRect(recognizerView.frame, inView: recognizerSuperView)
             menuController.setMenuVisible(true, animated:true)
-            
-            let menuItemChoose = UIMenuItem(title: "Choose", action: "choose:")
-            let menuItemTrim = UIMenuItem(title: "Trim", action: "trim:")
-            let menuItemDelete = UIMenuItem(title: "Delete", action: "deleteVideo:")
-            menuController.menuItems = [menuItemChoose, menuItemTrim, menuItemDelete]
-            
             recognizerView.becomeFirstResponder()
             
         }
@@ -100,11 +100,15 @@ class BottomCell : CommonCell {
     }
     
     func choose(sender: AnyObject) {
-        delegate?.choose?(sender, index: 0)
+        if let delegate = delegate as? AssetsPicker, let indexPath = delegate.bottomCollectionView.indexPathForCell(self) {
+            delegate.choose(sender, index: indexPath.item)
+        }
     }
     
     func trim(sender: AnyObject) {
-        delegate?.trim?(sender, index: 0)
+        if let delegate = delegate as? AssetsPicker, let indexPath = delegate.bottomCollectionView.indexPathForCell(self) {
+            delegate.trim(sender, index: indexPath.item)
+        }
     }
     
     func deleteVideo(sender: AnyObject) {
