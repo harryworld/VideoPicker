@@ -44,6 +44,7 @@ public protocol AssetsPickerDelegate {
 
 @objc public protocol AssetsPickerMenuDelegate {
     
+    optional func beginMenuActions()
     optional func didChooseVideo(index: Int)
     optional func didTrimVideo(index: Int)
     optional func didDeleteVideo(index: Int)
@@ -71,16 +72,16 @@ final public class AssetsPicker : UIView {
     public var dataSource : AssetsPickerDataSource?
     public var menuDelegate : AssetsPickerMenuDelegate?
     
-    var bottomCollectionView : UICollectionView!
-    var topCollectionView : UICollectionView!
+    public var bottomCollectionView : UICollectionView!
+    public var topCollectionView : UICollectionView!
     
     var cellReload = false
     
     var topSelectedIndex : NSIndexPath!
     var bottomSelectedIndex : NSIndexPath!
     
-    var cancelButton : UIButton!
-    var okButton : UIButton!
+    public var cancelButton : UIButton!
+    public var okButton : UIButton!
     
     let topLayerCellMargin = (UIScreen.mainScreen().bounds.width / 6) / 5
     let bottomLayerCellMargin = (UIScreen.mainScreen().bounds.width / 12) / 11
@@ -365,6 +366,10 @@ extension AssetsPicker {
 }
 
 extension AssetsPicker : AssetsPickerCellDelegate {
+    
+    func beginMenuActions() {
+        menuDelegate?.beginMenuActions?()
+    }
     
     func choose(sender: AnyObject, index: Int) {
         menuDelegate?.didChooseVideo?(index)
