@@ -75,10 +75,10 @@ class BottomCell : CommonCell {
     func handleTapGesture(tap: UITapGestureRecognizer) {
         if let recognizerView = tap.view, recognizerSuperView = recognizerView.superview
         {
-            menuController.setTargetRect(recognizerView.frame, inView: recognizerSuperView)
-            menuController.setMenuVisible(true, animated:true)
             recognizerView.becomeFirstResponder()
             
+            menuController.setTargetRect(recognizerView.frame, inView: recognizerSuperView)
+            menuController.setMenuVisible(true, animated:true)
         }
     }
     
